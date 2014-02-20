@@ -10,6 +10,8 @@ IntercoolerRailsDemo::Application.routes.draw do
   post 'flash_notice' => 'welcome#flash_notice'
   post 'flash_alert' => 'welcome#flash_alert'
 
+  get 'basics' => 'basic#index'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -1,23 +1,25 @@
-<h1>What Is This I Don't Even?</h1>
+<div id="contentDiv">
+  <h1>What Is This I Don't Even?</h1>
 
-<p>This is a rails application that demos many of the features of <a href="http://intercoolerjs.org">IntercoolerJS</a>.
-  If you haven't already, head on over to the <a href="http://intercoolerjs.org/intro.html">introduction</a> to
-  Intercooler, which will give you a basic idea of how the library works.  We'll wait.</p>
+  <p>This is a rails application that demos many of the features of <a href="http://intercoolerjs.org">IntercoolerJS</a>.
+    If you haven't already, head on over to the <a href="http://intercoolerjs.org/intro.html">introduction</a> to
+    Intercooler, which will give you a basic idea of how the library works. We'll wait.</p>
 
-<p>Got the general idea?  Good.</p>
+  <p>Got the general idea? Good.</p>
 
-<p>To kick things off, here is a simple button that makes a post to the server and then executes some javascript (passed back from
-the server via <a href="http://intercoolerjs.org/responses.html#http_headers">Intercooler HTTP Headers</a>):</p>
+  <p>To kick things off, here is a simple button that makes a post to the server and then executes some javascript
+    (passed back from
+    the server via <a href="http://intercoolerjs.org/responses.html#http_headers">Intercooler HTTP Headers</a>):</p>
 
-<button ic-post-to="/welcome/script" class="btn btn-primary">Execute It!</button>
+  <button ic-post-to="/welcome/script" class="btn btn-primary">Execute It!</button>
 
-<p>This is all done via AJAX, wired into the button using a simple attribute:</p>
+  <p>This is all done via AJAX, wired into the button using a simple attribute:</p>
 
 <pre>
   &lt;button ic-post-to="/welcome/script" class="btn btn-primary">Execute It!&lt;/button>
 </pre>
 
-<p>The server side implementation is simply:</p>
+  <p>The server side implementation is simply:</p>
 
 <pre>
   def script
@@ -26,14 +28,14 @@ the server via <a href="http://intercoolerjs.org/responses.html#http_headers">In
   end
 </pre>
 
-<p>Now, this isn't a common way to use Intercooler: you typically are using HTML partials and
-  <a href="http://intercoolerjs.org/dependencies.html">dependencies</a> to get the UX you want, but it demonstrates
-the idea and also showcases a nifty trick you might need at some point.</p>
+  <p>Now, this isn't a common way to use Intercooler: you typically are using HTML partials and
+    <a href="http://intercoolerjs.org/dependencies.html">dependencies</a> to get the UX you want, but it demonstrates
+    the idea and also showcases a nifty trick you might need at some point.</p>
 
-<h2>Rails Friendly...</h2>
+  <h2>Rails Friendly...</h2>
 
-<p>IntercoolerJS is <em>especially</em> Rails friendly.  As an example, the flash for this application has been
-extracted to a partial, and set up to refresh when any Intercooler-enabled button is clicked:</p>
+  <p>IntercoolerJS is <em>especially</em> Rails friendly. As an example, the flash for this application has been
+    extracted to a partial, and set up to refresh when any Intercooler-enabled button is clicked:</p>
 
 <pre>
   &lt;div id="flash-div" ic-src="/flash" ic-deps="*" ic-always-update="true">
@@ -57,24 +59,26 @@ extracted to a partial, and set up to refresh when any Intercooler-enabled butto
   &lt;/div>
 </pre>
 
-<p>And here are a couple of buttons that punch values into the flash via AJAX requests.  Intercooler automatically
-refreshes the flash (note it depends on any action, via a <code>ic-deps</code> annotation):</p>
+  <p>And here are a couple of buttons that punch values into the flash via AJAX requests. Intercooler automatically
+    refreshes the flash (note it depends on any action, via a <code>ic-deps</code> annotation):</p>
 
-<button ic-post-to="/flash_notice" class="btn btn-primary">Post A Notice</button>
-<button ic-post-to="/flash_alert" class="btn btn-danger">Post An Alert!</button>
+  <button ic-post-to="/flash_notice" class="btn btn-primary">Post A Notice</button>
+  <button ic-post-to="/flash_alert" class="btn btn-danger">Post An Alert!</button>
 
-<p>This lets you continue to use the flash the way you always have when using Intercooler actions.  And, since
-it is using <strong>Just Another Partial&trade;</strong>, it works just fine if you are mixing traditional Rails code (or any other traditional
-  web framework for that matter!) with your Intercooler code.</p>
+  <p>This lets you continue to use the flash the way you always have when using Intercooler actions. And, since
+    it is using <strong>Just Another Partial&trade;</strong>, it works just fine if you are mixing traditional Rails
+    code (or any other traditional
+    web framework for that matter!) with your Intercooler code.</p>
 
-<h2>My Source, Let Me Show You It...</h2>
+  <h2>My Source, Let Me Show You It...</h2>
 
-<p>This app can be cloned from github here:</p>
+  <p>This app can be cloned from github here:</p>
 
-<a href="https://github.com/LeadDyno/intercooler-js-demo-rails-app">https://github.com/LeadDyno/intercooler-js-demo-rails-app</a>
+  <a href="https://github.com/LeadDyno/intercooler-js-demo-rails-app">https://github.com/LeadDyno/intercooler-js-demo-rails-app</a>
 
-<p>And the main IntercoolerJS source repo is here:</p>
+  <p>And the main IntercoolerJS source repo is here:</p>
 
-<a href="https://github.com/LeadDyno/intercooler-js">https://github.com/LeadDyno/intercooler-js</a>
+  <a href="https://github.com/LeadDyno/intercooler-js">https://github.com/LeadDyno/intercooler-js</a>
 
-<p>Enjoy exploring Intercooler!</p>
+  <p>Enjoy exploring Intercooler!</p>
+</div>

@@ -21,7 +21,7 @@ var Intercooler = Intercooler || (function () {
   var _ERROR = 4;
 
   var _SRC_ATTRS = ['ic-src', 'ic-style-src', 'ic-attr-src', 'ic-prepend-from', 'ic-append-from', 'ic-text-src'];
-  var _DEST_ATTRS = ['ic-post-to', 'ic-put-to', 'ic-delete-from'];
+  var _DEST_ATTRS = ['ic-get-from', 'ic-post-to', 'ic-put-to', 'ic-delete-from'];
 
   var _remote = $;
   var _urlHandlers = [];
@@ -116,22 +116,30 @@ var Intercooler = Intercooler || (function () {
   }
 
   function processHeaders(elt, xhr) {
-    if (xhr.getResponseHeader("X-ic-refresh")) {
-      var pathsToRefresh = xhr.getResponseHeader("X-ic-refresh").split(",");
+    if (xhr.getResponseHeader("X-IC-Refresh")) {
+      var pathsToRefresh = xhr.getResponseHeader("X-IC-Refresh").split(",");
       log("IC HEADER: refreshing " + pathsToRefresh, _DEBUG);
       $.each(pathsToRefresh, function (i, str) {
         refreshDependencies(str.replace(/ /g, ""), elt);
       });
-    } else if (xhr.getResponseHeader("X-ic-script")) {
-      log("IC HEADER: evaling " + xhr.getResponseHeader("X-ic-script"), _DEBUG);
-      eval(xhr.getResponseHeader("X-ic-script"));
-    } else if (xhr.getResponseHeader("X-ic-redirect")) {
-      log("IC HEADER: redirecting to " + xhr.getResponseHeader("X-ic-redirect"), _DEBUG);
-      window.location = xhr.getResponseHeader("X-ic-redirect");
-    } else if (xhr.getResponseHeader("X-ic-open")) {
-      log("IC HEADER: opening " + xhr.getResponseHeader("X-ic-open"), _DEBUG);
-      window.open(xhr.getResponseHeader("X-ic-open"));
-    } else if (xhr.getResponseHeader("X-ic-remove")) {
+    }
+    if (xhr.getResponseHeader("X-IC-Script")) {
+      log("IC HEADER: evaling " + xhr.getResponseHeader("X-IC-Script"), _DEBUG);
+      eval(xhr.getResponseHeader("X-IC-Script"));
+    }
+    if (xhr.getResponseHeader("X-IC-Redirect")) {
+      log("IC HEADER: redirecting to " + xhr.getResponseHeader("X-IC-Redirect"), _DEBUG);
+      window.location = xhr.getResponseHeader("X-IC-Redirect");
+    }
+    if (xhr.getResponseHeader("X-IC-Redirect")) {
+      log("IC HEADER: redirecting to " + xhr.getResponseHeader("X-IC-Redirect"), _DEBUG);
+      window.location = xhr.getResponseHeader("X-IC-Redirect");
+    }
+    if (xhr.getResponseHeader("X-IC-Open")) {
+      log("IC HEADER: opening " + xhr.getResponseHeader("X-IC-Open"), _DEBUG);
+      window.open(xhr.getResponseHeader("X-IC-Open"));
+    }
+    if (xhr.getResponseHeader("X-IC-Remove")) {
       log("IC HEADER REMOVE COMMAND");
       if (elt) {
         var target = getTarget(elt);
@@ -145,7 +153,6 @@ var Intercooler = Intercooler || (function () {
         }
       }
     }
-
     return true;
   }
 
@@ -404,6 +411,8 @@ var Intercooler = Intercooler || (function () {
       return "PUT";
     } else if (attr == "ic-delete-from") {
       return "DELETE";
+    } else if (attr == "ic-get-from") {
+      return "GET";
     } else {
       return "POST";
     }

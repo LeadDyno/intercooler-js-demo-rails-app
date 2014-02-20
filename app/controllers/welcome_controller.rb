@@ -1,10 +1,14 @@
 class WelcomeController < ApplicationController
 
   def index
+    unless params['ic-request'].blank?
+      response.headers['X-IC-PushState'] = '/'
+      render layout: false
+    end
   end
 
   def script
-    response.headers['X-ic-script'] = "alert('Hello! This is a script from the server side!');"
+    response.headers['X-IC-Script'] = "alert('Hello! This is a script from the server side!');"
     render inline: ''
   end
 
