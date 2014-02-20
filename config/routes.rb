@@ -14,6 +14,15 @@ IntercoolerRailsDemo::Application.routes.draw do
 
   get 'basics' => 'basic#index'
 
+  resources :contacts do
+    collection do
+      post :activate
+      post :deactivate
+      get :table
+      get :click_to_edit
+    end
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

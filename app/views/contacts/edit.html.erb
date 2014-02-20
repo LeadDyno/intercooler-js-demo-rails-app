@@ -1,0 +1,21 @@
+<div id="contactDiv" class="row">
+  <div class="col-md-5">
+    <%= form_for @contact do |f| %>
+      <div class="form-group">
+        <label>Email</label>
+        <%= f.text_field :email, {:class => "form-control"} %>
+      </div>
+      <div class="form-group">
+        <label>First Name</label>
+        <%= f.text_field :first_name, {:class => "form-control"} %>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <%= f.text_field :last_name, {:class => "form-control"} %>
+      </div>
+      <button ic-target="#contactDiv" ic-put-to="<%= contact_path @contact %>" class="btn btn-primary">Save</button>
+
+      <button ic-target="#contactDiv" ic-get-from="<%= contact_path @contact %>" class="btn btn-danger">Cancel</button>
+    <% end %>
+  </div>
+</div>

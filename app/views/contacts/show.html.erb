@@ -1,0 +1,38 @@
+<div id="contactDiv">
+  <h2>Contact Details</h2>
+
+  <div class="row">
+    <div class="col-md-2">
+      Email
+    </div>
+    <div class="col-md-10">
+      <%= @contact.email %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      First Name
+    </div>
+    <div class="col-md-10">
+      <%= @contact.first_name %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2">
+      Last Name
+    </div>
+    <div class="col-md-10">
+      <%= @contact.last_name %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <button ic-target="#contactDiv"
+              ic-get-from="<%= edit_contact_path @contact %>"
+              class="btn btn-primary">Click To Edit</button>
+    </div>
+  </div>
+</div>
