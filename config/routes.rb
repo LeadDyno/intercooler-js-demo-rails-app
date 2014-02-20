@@ -3,7 +3,12 @@ IntercoolerRailsDemo::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'welcome#index'
+
+  post 'welcome/script' => 'welcome#script'
+  get 'flash' => 'welcome#flash_div'
+  post 'flash_notice' => 'welcome#flash_notice'
+  post 'flash_alert' => 'welcome#flash_alert'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

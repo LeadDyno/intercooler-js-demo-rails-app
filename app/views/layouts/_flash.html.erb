@@ -1,0 +1,19 @@
+<div id="flash-div" ic-src="/flash" ic-deps="*" ic-always-update="true">
+
+  <% if flash[:notice] %>
+    <div class="alert alert-info"><%= flash[:notice] %></div>
+  <% end %>
+
+  <% if flash[:alert] %>
+    <div class="alert alert-danger"><%= flash[:alert] %></div>
+  <% end %>
+
+  <script>
+    $(function(){
+      setTimeout(function(){
+        $("#flash-div").fadeOut();
+      }, 2000);
+    })
+  </script>
+
+</div>
