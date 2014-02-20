@@ -298,14 +298,11 @@ var Intercooler = Intercooler || (function () {
     } else { // otherwise include the element
       str += "&" + elt.serialize();
     }
-    if (target.attr('id')) {
-      str += "&ic-element-id=" + target.attr('id');
+    if (elt.attr('id')) {
+      str += "&ic-element-id=" + elt.attr('id');
     }
-    if (target.attr('name')) {
-      str += "&ic-element-name=" + target.attr('name');
-    }
-    if (target.attr('ic-id')) {
-      str += "&ic-id=" + target.attr('ic-id');
+    if (elt.attr('name')) {
+      str += "&ic-element-name=" + elt.attr('name');
     }
     if (target.attr('ic-id')) {
       str += "&ic-id=" + target.attr('ic-id');

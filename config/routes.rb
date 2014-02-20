@@ -6,7 +6,9 @@ IntercoolerRailsDemo::Application.routes.draw do
   root 'welcome#index'
 
   post 'welcome/script' => 'welcome#script'
+
   get 'flash' => 'welcome#flash_div'
+
   post 'flash_notice' => 'welcome#flash_notice'
   post 'flash_alert' => 'welcome#flash_alert'
 
