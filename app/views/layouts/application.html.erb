@@ -41,7 +41,9 @@
           <li class="<%= "active" if params[:controller] == 'contacts' && params[:action] == 'index' %>">
             <a href="/contacts">Bulk UI</a>
           </li>
-          <li><a href="#">Slick Nav</a></li>
+          <li class="<%= "active" if params[:controller] == 'slick_nav' %>">
+            <a href="/slick_nav/tab1">Slick Nav</a>
+          </li>
           <li class="<%= "active" if params[:controller] == 'contacts' && ['show', 'edit'].member?(params[:action])  %>">
             <a href="/contacts/click_to_edit">Click To Edit</a>
           </li>
@@ -49,7 +51,9 @@
         </ul>
       </div>
 
-      <%= yield %>
+      <div id="body-wrapper">
+        <%= yield %>
+      </div>
 
       <!-- Site footer -->
       <div class="footer">

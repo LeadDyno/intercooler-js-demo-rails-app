@@ -23,6 +23,10 @@ IntercoolerRailsDemo::Application.routes.draw do
     end
   end
 
+  get 'slick_nav/tab1' => 'slick_nav#tab1'
+  get 'slick_nav/tab2' => 'slick_nav#tab2'
+  get 'slick_nav/tab3' => 'slick_nav#tab3'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

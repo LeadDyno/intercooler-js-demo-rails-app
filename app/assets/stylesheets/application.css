@@ -33,6 +33,10 @@ p {
   width: 80%
 }
 
+#body-wrapper {
+  padding: 12px 12px;
+}
+
 .nav-justified {
   background-color: #eee;
   border: 1px solid #ccc;
