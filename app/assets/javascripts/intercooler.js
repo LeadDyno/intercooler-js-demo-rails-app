@@ -220,20 +220,43 @@ var Intercooler = Intercooler || (function () {
         return;
       }
     }
+    var spinner = findSpinner(elt);
+    elt.addClass('disabled');
+    spinner.fadeIn();
     _remote.ajax({
       type: type,
       url: url,
       data: data,
       dataType: 'text',
-      success: function(data, textStatus, xhr) {
-        if(processHeaders(elt, xhr)){
+      success: function (data, textStatus, xhr) {
+        if (processHeaders(elt, xhr)) {
           success(data, textStatus, elt, xhr)
         }
       },
       error: function (req, status, str) {
         log("An error occurred: " + str, _ERROR);
+      },
+      complete : function(){
+        if(spinner.length > 0) {
+          spinner.fadeOut(function(){
+            elt.removeClass('disabled');
+          });
+        } else {
+          elt.removeClass('disabled');
+        }
       }
     })
+  }
+
+  function findSpinner(elt) {
+    var child = null;
+    if ($(elt).attr('ic-indicator')) {
+      child = $($(elt).attr('ic-indicator')).first();
+    } else {
+      child = $(elt).find(".ic-indicator").first();
+    }
+    console.log(child);
+    return child;
   }
 
   // Taken from https://gist.github.com/kares/956897
@@ -595,7 +618,7 @@ var Intercooler = Intercooler || (function () {
      * Mock Testing API
      * =================================================== */
     addURLHandler: function (handler) {
-      if(!handler.url) {
+      if (!handler.url) {
         throw "Handlers must include a URL pattern"
       }
       _urlHandlers.push(handler);

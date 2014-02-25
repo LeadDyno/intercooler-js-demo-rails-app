@@ -1,4 +1,36 @@
 <div id="contentDiv">
+
   <h1>Intercooler Basics</h1>
+
+  <p>Here are some basic examples of Intercooler UI.</p>
+
+  <h3>Spinner + Dependency Update</h3>
+
+  <p>Below is a basic example of a few different Intercooler features:</p>
+
+  <ul>
+    <li>Tying a button to a url using <code>ic-post-to</code></li>
+    <li>A spinner indicator on the button</li>
+    <li>A div that depends on the same path with its <code>ic-src</code> attribute and, therefore, retrieves a new
+      version of itself after the button is clicked, based on the Intercooler dependency model</li>
+  </ul>
+
+  <p>When you click on the button, it will POST to the <code>/basics/counter</code> URL on the server, fading in the
+    spinner when the request starts and fading it out when the request finishes.  Then a GET will be issued to
+  <code>/basics/counter</code> to retrieve a new version of the span below the button, rendering the new count.</p>
+
+  <div class="btn btn-primary" ic-post-to="/basics/counter">
+    Click To Increment A Session Counter
+    <i class="fa fa-spinner fa-spin ic-indicator" style="display: none"></i>
+  </div>
+
+  <div class="btn btn-danger" ic-delete-from="/basics/counter">
+    Reset
+  </div>
+
+  <%= render :partial => 'counter' %>
+
+  <hr/>
+
 </div>
 

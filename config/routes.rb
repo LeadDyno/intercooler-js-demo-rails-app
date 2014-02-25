@@ -13,6 +13,9 @@ IntercoolerRailsDemo::Application.routes.draw do
   post 'flash_alert' => 'welcome#flash_alert'
 
   get 'basics' => 'basic#index'
+  get 'basics/counter' => 'basic#counter'
+  post 'basics/counter' => 'basic#inc_counter'
+  delete 'basics/counter' => 'basic#reset_counter'
 
   resources :contacts do
     collection do
