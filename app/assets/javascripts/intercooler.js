@@ -177,6 +177,14 @@ var Intercooler = Intercooler || (function () {
     success(body, "", elt);
   }
 
+  function beforeRequest(elt) {
+    elt.addClass('disabled');
+  }
+
+  function afterRequest(elt) {
+    elt.removeClass('disabled')
+  }
+
   function handleRemoteRequest(elt, type, url, data, success) {
     if(type == "PUT") {
       data += "&_method=PUT";
@@ -220,9 +228,13 @@ var Intercooler = Intercooler || (function () {
         return;
       }
     }
+
+    beforeRequest(elt);
+
+    // Spinner support
     var spinner = findSpinner(elt);
-    elt.addClass('disabled');
     spinner.fadeIn();
+
     _remote.ajax({
       type: type,
       url: url,
@@ -239,10 +251,10 @@ var Intercooler = Intercooler || (function () {
       complete : function(){
         if(spinner.length > 0) {
           spinner.fadeOut(function(){
-            elt.removeClass('disabled');
+            afterRequest(elt);
           });
         } else {
-          elt.removeClass('disabled');
+          afterRequest(elt);
         }
       }
     })
@@ -253,7 +265,12 @@ var Intercooler = Intercooler || (function () {
     if ($(elt).attr('ic-indicator')) {
       child = $($(elt).attr('ic-indicator')).first();
     } else {
-      child = $(elt).find(".ic-indicator").first();
+      var nearestParentWithSpinner = $(elt).closest("[ic-indicator]");
+      if(nearestParentWithSpinner.length > 0) {
+        child = $(nearestParentWithSpinner.first().attr('ic-indicator')).first();
+      } else {
+        child = $(elt).find(".ic-indicator").first();
+      }
     }
     console.log(child);
     return child;

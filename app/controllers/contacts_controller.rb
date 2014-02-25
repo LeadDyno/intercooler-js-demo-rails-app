@@ -33,32 +33,29 @@ class ContactsController < ApplicationController
     redirect_to contact_path Contact.first
   end
 
-  def activate
-    if params[:ids]
-      params[:ids].each do |id|
-        c = Contact.find(id)
-        c.status = 'Active'
-        c.save!
-      end
-      flash[:notice] = "Activated #{params[:ids].count} contacts!"
-    end
-    render inline: ''
-  end
-
-  def deactivate
-    if params[:ids]
-      params[:ids].each do |id|
-        c = Contact.find(id)
-        c.status = 'Inactive'
-        c.save!
-      end
-      flash[:notice] = "Deactivated #{params[:ids].count} contacts!"
-    end
-    render inline: ''
-  end
-
   def table
-    render :partial => 'contacts/contacts_table'
+    if request.post?
+      if params[:ids]
+        if params['ic-element-id'] == 'activate_btn'
+          Contact.find(params[:ids]).each do |c|
+            c.status = 'Active'
+            c.save!
+          end
+          flash[:notice] = "Activated #{params[:ids].count} contacts!"
+        elsif params['ic-element-id'] == 'deactivate_btn'
+          Contact.find(params[:ids]).each do |c|
+            c.status = 'Inactive'
+            c.save!
+          end
+          flash[:notice] = "Deactivated #{params[:ids].count} contacts!"
+        else
+          flash[:alert] = 'Bad Action!'
+        end
+      end
+      render inline: ''
+    else
+      render :partial => 'contacts/contacts_table'
+    end
   end
 
 private

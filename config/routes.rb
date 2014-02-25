@@ -13,15 +13,11 @@ IntercoolerRailsDemo::Application.routes.draw do
   post 'flash_alert' => 'welcome#flash_alert'
 
   get 'basics' => 'basic#index'
-  get 'basics/counter' => 'basic#counter'
-  post 'basics/counter' => 'basic#inc_counter'
-  delete 'basics/counter' => 'basic#reset_counter'
+  match 'basics/counter' => 'basic#counter', via: :all
 
   resources :contacts do
     collection do
-      post :activate
-      post :deactivate
-      get :table
+      match :table, via: [:get, :post]
       get :click_to_edit
     end
   end

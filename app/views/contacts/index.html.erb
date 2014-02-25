@@ -2,14 +2,23 @@
   <div class="col-md-12">
 
     <h2>Contacts</h2>
-    <div class="btn-group pull-right">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        Bulk Actions <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a ic-post-to="/contacts/activate" ic-include="$('#ids')">Mark Active</a></li>
-        <li><a ic-post-to="/contacts/deactivate" ic-include="$('#ids')">Mark Inactive</a></li>
-      </ul>
+
+    <div class="pull-right">
+
+      <i id="table-action-spinner" class="fa fa-spinner fa-spin ic-indicator" style="display: none"></i>
+
+      <div class="btn-group " ic-indicator="#table-action-spinner">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          Bulk Actions <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a id="activate_btn" ic-post-to="/contacts/table" ic-include="$('#ids')">Mark Active</a></li>
+          <li><a id="deactivate_btn" ic-post-to="/contacts/table" ic-include="$('#ids')">Mark Inactive</a></li>
+          <li class="divider"></li>
+          <li><a id="bad_action" ic-post-to="/contacts/table" ic-include="$('#ids')">Bad Action</a></li>
+        </ul>
+      </div>
+
     </div>
 
   </div>
