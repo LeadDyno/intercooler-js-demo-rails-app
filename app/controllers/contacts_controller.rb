@@ -37,17 +37,15 @@ class ContactsController < ApplicationController
     if request.post?
       if params[:ids]
         if params['ic-element-id'] == 'activate_btn'
-          Contact.find(params[:ids]).each do |c|
-            c.status = 'Active'
-            c.save!
-          end
+
+          Contact.find(params[:ids]).each &:activate!
           flash[:notice] = "Activated #{params[:ids].count} contacts!"
+
         elsif params['ic-element-id'] == 'deactivate_btn'
-          Contact.find(params[:ids]).each do |c|
-            c.status = 'Inactive'
-            c.save!
-          end
+
+          Contact.find(params[:ids]).each &:deactivate!
           flash[:notice] = "Deactivated #{params[:ids].count} contacts!"
+
         else
           flash[:alert] = 'Bad Action!'
         end
