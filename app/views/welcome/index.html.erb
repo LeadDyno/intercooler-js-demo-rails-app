@@ -24,7 +24,7 @@
 <pre>
   def script
     response.headers['X-IC-Script'] = "alert('Hello! This is a script from the server side!');"
-    render inline: ''
+    render nothing:true
   end
 </pre>
 

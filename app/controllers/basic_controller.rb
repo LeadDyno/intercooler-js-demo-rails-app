@@ -10,10 +10,10 @@ class BasicController < ApplicationController
       sleep(2)
       session[:counter] ||=0
       session[:counter] += 1
-      render inline: ''
+      render nothing:true
     elsif request.delete?
       session[:counter] = 0
-      render inline: ''
+      render nothing:true
     else
       render partial: 'basic/counter'
     end

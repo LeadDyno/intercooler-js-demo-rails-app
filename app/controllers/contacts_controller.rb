@@ -51,8 +51,10 @@ class ContactsController < ApplicationController
         else
           flash[:alert] = 'Bad Action!'
         end
+      else
+        flash[:alert] = 'Please select some items.'
       end
-      render inline: ''
+      render nothing:true
     else
       render :partial => 'contacts/contacts_table'
     end

@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
 
   def script
     response.headers['X-IC-Script'] = "alert('Hello! This is a script from the server side!');"
-    render inline: ''
+    render nothing:true
   end
 
   def flash_div
@@ -15,12 +15,12 @@ class WelcomeController < ApplicationController
 
   def flash_notice
     flash[:notice] = 'Here is a notice...'
-    render inline: ''
+    render nothing:true
   end
 
   def flash_alert
     flash[:alert] = 'Here is an alert...'
-    render inline: ''
+    render nothing:true
   end
 
 end
