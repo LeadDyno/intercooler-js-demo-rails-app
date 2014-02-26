@@ -2,9 +2,12 @@ class ContactsController < ApplicationController
 
   def index
     ensure_ten
+    render :layout => request['ic-request'].blank?
   end
 
   def new
+    @contact = Contact.new
+    render :layout => request['ic-request'].blank?
   end
 
   def show
@@ -17,11 +20,23 @@ class ContactsController < ApplicationController
     render :layout => request['ic-request'].blank?
   end
 
+  def create
+    @contact = Contact.new(params.require(:contact).permit(:email, :first_name, :last_name))
+    if  @contact.save
+      flash[:notice] = 'Created Contact...'
+      response.header['X-IC-Redirect'] = url_for @contact
+      render nothing:true
+    else
+      flash[:alert] = 'Could Not Save Contact...'
+      render :layout => request['ic-request'].blank?, :action => :edit
+    end
+  end
+
   def update
     @contact = Contact.find(params[:id])
     if  @contact.update(params.require(:contact).permit(:email, :first_name, :last_name))
       flash[:notice] = 'Updated Contact...'
-      render :layout => request['ic-request'].blank?, :action => :show unless request['ic-request'].blank?
+      render :layout => request['ic-request'].blank?, :action => :show
     else
       flash[:alert] = 'Could Not Save Contact...'
       render :layout => request['ic-request'].blank?, :action => :edit

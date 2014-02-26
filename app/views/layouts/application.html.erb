@@ -29,6 +29,7 @@
       <%= render :partial => '/layouts/flash' %>
 
       <div class="masthead">
+        <a class="pull-right" href="https://github.com/LeadDyno/intercooler-js-demo-rails-app"><i class="fa fa-github"></i> See The Code...</a>
         <h3 class="text-muted">
           <img width="25" src="http://intercoolerjs.org/images/Intercooler_CMYK_noType_64.png">
           <i class="fa fa-plus"></i>
@@ -36,15 +37,15 @@
           <i class="fa fa-arrow-right"></i> The IntercoolerJS Rails Demo App
         </h3>
         <ul class="nav nav-justified">
-          <li class="<%= "active" if params[:controller] == 'welcome' %>"><a href="/">Home</a></li>
-          <li class="<%= "active" if params[:controller] == 'basic' %>"><a href="/basics">Basics</a></li>
-          <li class="<%= "active" if params[:controller] == 'contacts' && params[:action] == 'index' %>">
+          <li class="<%= active_if controller: 'welcome' %>"><a href="/">Home</a></li>
+          <li class="<%= active_if controller: 'basic' %>"><a href="/basics">Basics</a></li>
+          <li class="<%= active_if controller: 'contacts', action: 'index' %>">
             <a href="/contacts">Bulk UI</a>
           </li>
-          <li class="<%= "active" if params[:controller] == 'slick_nav' %>">
+          <li class="<%= active_if controller: 'slick_nav' %>">
             <a href="/slick_nav/tab1">Slick Nav</a>
           </li>
-          <li class="<%= "active" if params[:controller] == 'contacts' && ['show', 'edit'].member?(params[:action])  %>">
+          <li class="<%= active_if controller: 'contacts', actions: ['show', 'edit'] %>">
             <a href="/contacts/click_to_edit">Click To Edit</a>
           </li>
           <li><a href="#">Progress Bar</a></li>

@@ -1,27 +1,39 @@
-<div class="row">
-  <div class="col-md-12">
+<div id="content-div">
+  <div class="row">
+    <div class="col-md-12">
 
-    <h2>Contacts</h2>
+      <h1>Bulk Update Example</h1>
 
-    <div class="pull-right">
+      <p>This is a great example of the </p>
 
-      <i id="table-action-spinner" class="fa fa-spinner fa-spin ic-indicator" style="display: none"></i>
+      <p>Note that the URL does not change on the page, editing is effectively a mode within this page.</p>
 
-      <div class="btn-group " ic-indicator="#table-action-spinner">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          Bulk Actions <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a id="activate_btn" ic-post-to="/contacts/table" ic-include="$('#ids')">Mark Active</a></li>
-          <li><a id="deactivate_btn" ic-post-to="/contacts/table" ic-include="$('#ids')">Mark Inactive</a></li>
-          <li class="divider"></li>
-          <li><a id="bad_action" ic-post-to="/contacts/table" ic-include="$('#ids')">Bad Action</a></li>
-        </ul>
+      <h4>Demo</h4>
+
+      <h2>Contacts</h2>
+
+      <div class="pull-right">
+
+        <i id="table-action-spinner" class="fa fa-spinner fa-spin ic-indicator" style="display: none"></i>
+
+        <div class="btn-group " ic-indicator="#table-action-spinner">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Bulk Actions <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a id="activate_btn" ic-post-to="/contacts/table" ic-include="#ids">Mark Active</a></li>
+            <li><a id="deactivate_btn" ic-post-to="/contacts/table" ic-include="#ids">Mark Inactive</a></li>
+            <li class="divider"></li>
+            <li><a id="bad_action" ic-post-to="/contacts/table" ic-include="#ids">Bad Action</a></li>
+            <li class="divider"></li>
+            <li><a ic-get-from="/contacts/new" ic-target="#content-div">New Contact</a></li>
+          </ul>
+        </div>
+
       </div>
 
     </div>
-
   </div>
-</div>
 
-<%= render :partial => 'contacts_table' %>
+  <%= render :partial => 'contacts_table' %>
+</div>

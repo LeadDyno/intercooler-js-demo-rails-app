@@ -1,6 +1,16 @@
 <div id="contactDiv" class="row">
-  <div class="col-md-5">
+  <div class="col-md-12">
 
+    <h1>AJAX Editing Example</h1>
+
+    <p>Below is a standard rails edit form wired in with some Bootstrap classes.  The server side implementation is
+    nearly identical to the usual Rails edit pattern, but uses AJAX for all requests.</p>
+
+    <p>Try inputting an invalid email to see how cleanly field validation is handled.</p>
+
+    <h4>Demo</h4>
+
+    <div class="col-md-5">
     <%= form_for @contact do |f| %>
 
       <div class="form-group <%='has-error' if @contact.errors[:email].present? %> ">
@@ -26,5 +36,6 @@
       <button ic-target="#contactDiv" ic-get-from="<%= contact_path @contact %>" class="btn btn-danger">Cancel</button>
 
     <% end %>
+    </div>
   </div>
 </div>
