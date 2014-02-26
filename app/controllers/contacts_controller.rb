@@ -24,11 +24,11 @@ class ContactsController < ApplicationController
     @contact = Contact.new(params.require(:contact).permit(:email, :first_name, :last_name))
     if  @contact.save
       flash[:notice] = 'Created Contact...'
-      response.header['X-IC-Redirect'] = url_for @contact
+      response.header['X-IC-Redirect'] = url_for @contact # use a client-side redirect for now...
       render nothing:true
     else
       flash[:alert] = 'Could Not Save Contact...'
-      render :layout => request['ic-request'].blank?, :action => :edit
+      render :layout => request['ic-request'].blank?, :action => :new
     end
   end
 
