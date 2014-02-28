@@ -20,3 +20,5 @@ $(function(){
     $(this).closest('li').addClass('active');
   });
 });
+
+Intercooler.setLogLevel(Intercooler.logLevels.DEBUG);
