@@ -1,19 +1,28 @@
 class SlickNavController < ApplicationController
 
   def tab1
-    unless params['ic-request'].blank?
+    if params['ic-request'].blank?
+      render :view
+    else
+      response.header['X-IC-SetLocation'] = request.path
       render :partial => 'tab1_content'
     end
   end
 
   def tab2
-    unless params['ic-request'].blank?
+    if params['ic-request'].blank?
+      render :view
+    else
+      response.header['X-IC-SetLocation'] = request.path
       render :partial => 'tab2_content'
     end
   end
 
   def tab3
-    unless params['ic-request'].blank?
+    if params['ic-request'].blank?
+      render :view
+    else
+      response.header['X-IC-SetLocation'] = request.path
       render :partial => 'tab3_content'
     end
   end

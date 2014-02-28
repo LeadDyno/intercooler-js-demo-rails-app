@@ -50,7 +50,7 @@ var Intercooler = Intercooler || (function () {
   k)-899497514);j=k;k=e;e=g<<30|g>>>2;g=h;h=c}b[0]=b[0]+h|0;b[1]=b[1]+g|0;b[2]=b[2]+e|0;b[3]=b[3]+k|0;b[4]=b[4]+j|0},_doFinalize:function(){var f=this._data,e=f.words,b=8*this._nDataBytes,h=8*f.sigBytes;e[h>>>5]|=128<<24-h%32;e[(h+64>>>9<<4)+14]=Math.floor(b/4294967296);e[(h+64>>>9<<4)+15]=b;f.sigBytes=4*e.length;this._process();return this._hash},clone:function(){var e=j.clone.call(this);e._hash=this._hash.clone();return e}});e.SHA1=j._createHelper(m);e.HmacSHA1=j._createHmacHelper(m)})();
 
   function fp(elt) {
-    return CryptoJS.SHA1(elt.html()).toString();
+    return CryptoJS.SHA1(elt).toString();
   }
 
   function levelPrefix(level) {
@@ -88,6 +88,10 @@ var Intercooler = Intercooler || (function () {
 
   function icSelectorFor(elt) {
     return "[ic-id='" + elt.attr("ic-id") + "']";
+  }
+
+  function findByICId(icId) {
+    return $("[ic-id='" + icId + "']");
   }
 
   function parseInterval(str) {
@@ -348,14 +352,26 @@ var Intercooler = Intercooler || (function () {
 
   function maybeSetIntercoolerInfo(elt) {
     var target = getTarget(elt);
-    if (!target.data('ic-id')) {
-      var eltFingerPrint = fp(elt);
-      var icId = uuid();
-      var lastRefresh = new Date().getTime();
-      target.attr('ic-id', icId);
-      target.attr('ic-last-refresh', lastRefresh);
-      target.attr('ic-fingerprint', eltFingerPrint);
+    getIntercoolerId(target);
+    maybeSetIntercoolerMetadata(target);
+  }
+
+  function updateIntercoolerMetaData(elt) {
+    elt.attr('ic-fingerprint', fp(elt.text()));
+    elt.attr('ic-last-refresh', new Date().getTime());
+  }
+
+  function maybeSetIntercoolerMetadata(elt) {
+    if (!elt.attr('ic-fingerprint')) {
+      updateIntercoolerMetaData(elt);
     }
+  }
+
+  function getIntercoolerId(elt) {
+    if (!elt.attr('ic-id')) {
+      elt.attr('ic-id', uuid());
+    }
+    return elt.attr('ic-id');
   }
 
   function withAttrs(attributes, func) {
@@ -490,26 +506,24 @@ var Intercooler = Intercooler || (function () {
   function processICResponse(data, elt) {
     if (data && /\S/.test(data)) {
       log("IC RESPONSE: Received: " + data, _DEBUG);
-      var newElt = $(data);
       var target = getTarget(elt);
-      maybeSetIntercoolerInfo(newElt);
-      if (newElt.attr('ic-fingerprint') != target.attr('ic-fingerprint') || target.attr('ic-always-update') == 'true') {
+      var dummy = $("<div></div>").html(data);
+      if (fp(dummy.text()) != target.attr('ic-fingerprint') || target.attr('ic-always-update') == 'true') {
         if (target.attr('ic-transition') == "none") {
-          target.replaceWith(newElt);
-          processNodes(newElt);
+          target.html(data);
+          updateIntercoolerMetaData(target);
+          processNodes(target.children());
           log("IC RESPONSE: Replacing " + target.html() + " with " + newElt.html(), _DEBUG);
         } else {
           target.fadeOut('fast', function () {
-            newElt.hide();
-            target.replaceWith(newElt);
-            log("IC RESPONSE:  Replacing " + target.html() + " with " + newElt.html(), _DEBUG);
-            processNodes(newElt);
-            newElt.fadeIn('slow');
+            target.html(data);
+            updateIntercoolerMetaData(target);
+            processNodes(target.children());
+            target.fadeIn('fast');
           });
         }
-      } else {
-        newElt.remove();
       }
+      dummy.remove();
     }
   }
 

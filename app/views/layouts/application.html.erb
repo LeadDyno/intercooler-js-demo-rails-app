@@ -26,7 +26,9 @@
 
     <div class="container">
 
-      <%= render :partial => '/layouts/flash' %>
+      <div id="flash-div" ic-src="/flash" ic-deps="*" ic-always-update="true">
+        <%= render :partial => '/layouts/flash' %>
+      </div>
 
       <div class="masthead">
         <a class="pull-right" href="https://github.com/LeadDyno/intercooler-js-demo-rails-app"><i class="fa fa-github"></i> See The Code...</a>
@@ -52,7 +54,7 @@
         </ul>
       </div>
 
-      <div id="body-wrapper">
+      <div id="content">
         <%= yield %>
       </div>
 

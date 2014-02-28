@@ -17,7 +17,7 @@ IntercoolerRailsDemo::Application.routes.draw do
 
   resources :contacts do
     collection do
-      match :table, via: [:get, :post]
+      match :contacts_table, via: [:get, :post]
       get :click_to_edit
     end
   end

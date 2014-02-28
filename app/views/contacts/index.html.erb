@@ -21,10 +21,10 @@
             Bulk Actions <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li><a id="activate_btn" ic-post-to="/contacts/table" ic-include="#ids">Mark Active</a></li>
-            <li><a id="deactivate_btn" ic-post-to="/contacts/table" ic-include="#ids">Mark Inactive</a></li>
+            <li><a id="activate_btn" ic-post-to="/contacts/contacts_table" ic-include="#ids">Mark Active</a></li>
+            <li><a id="deactivate_btn" ic-post-to="/contacts/contacts_table" ic-include="#ids">Mark Inactive</a></li>
             <li class="divider"></li>
-            <li><a id="bad_action" ic-post-to="/contacts/table" ic-include="#ids">Bad Action</a></li>
+            <li><a id="bad_action" ic-post-to="/contacts/contacts_table" ic-include="#ids">Bad Action</a></li>
             <li class="divider"></li>
             <li><a ic-get-from="/contacts/new" ic-target="#content-div">New Contact</a></li>
           </ul>
@@ -35,5 +35,12 @@
     </div>
   </div>
 
-  <%= render :partial => 'contacts_table' %>
+  <form id="ids">
+    <div class="row">
+      <div class="col-md-12" ic-src="/contacts/contacts_table">
+        <%= render :partial => 'contacts_table' %>
+      </div>
+    </div>
+  </form>
+
 </div>

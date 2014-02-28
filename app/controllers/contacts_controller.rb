@@ -48,7 +48,7 @@ class ContactsController < ApplicationController
     redirect_to contact_path Contact.first
   end
 
-  def table
+  def contacts_table
     if request.post?
       if params[:ids]
         if params['ic-element-id'] == 'activate_btn'

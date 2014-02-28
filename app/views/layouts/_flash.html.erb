@@ -1,19 +1,19 @@
-<div id="flash-div" ic-src="/flash" ic-deps="*" ic-always-update="true">
+<% if flash[:notice] %>
+  <div class="alert alert-info"><%= flash[:notice] %></div>
+<% end %>
 
-  <% if flash[:notice] %>
-    <div class="alert alert-info"><%= flash[:notice] %></div>
-  <% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
 
-  <% if flash[:alert] %>
-    <div class="alert alert-danger"><%= flash[:alert] %></div>
-  <% end %>
-
+<% if flash[:notice] or flash[:alert] %>
   <script>
-    $(function(){
-      setTimeout(function(){
-        $("#flash-div").fadeOut();
-      }, 2000);
+    $(function () {
+      $("#flash-div").fadeIn(function () {
+        setTimeout(function () {
+          $("#flash-div").fadeOut();
+        }, 1000);
+      });
     })
   </script>
-
-</div>
+<% end %>

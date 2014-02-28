@@ -1,41 +1,38 @@
-<div id="contactDiv" class="row">
-  <div class="col-md-12">
+<div class="col-md-12">
 
-    <h1>AJAX New Item Example</h1>
+  <h1>AJAX New Item Example</h1>
 
-    <p>Below is a standard rails creation form wired in with some Bootstrap classes.  The server side implementation is
-      nearly identical to the usual Rails new pattern, but uses AJAX for all requests.</p>
+  <p>Below is a standard rails creation form wired in with some Bootstrap classes. The server side implementation is
+    nearly identical to the usual Rails new pattern, but uses AJAX for all requests.</p>
 
-    <p>Try inputting an invalid email to see how cleanly field validation is handled.</p>
+  <p>Try inputting an invalid email to see how cleanly field validation is handled.</p>
 
-    <h4>Demo</h4>
+  <h4>Demo</h4>
 
-    <div class="col-md-5">
-      <%= form_for @contact do |f| %>
+  <div class="col-md-5">
+    <%= form_for @contact do |f| %>
 
-        <div class="form-group <%='has-error' if @contact.errors[:email].present? %> ">
-          <label class="control-label" >Email</label>
-          <%= f.text_field :email, {:class => 'form-control'} %>
-          <span class="help-block"><%= @contact.errors[:email].join(',') if @contact.errors[:email].present? %></span>
-        </div>
+      <div class="form-group <%= 'has-error' if @contact.errors[:email].present? %> ">
+        <label class="control-label">Email</label>
+        <%= f.text_field :email, {:class => 'form-control'} %>
+        <span class="help-block"><%= @contact.errors[:email].join(',') if @contact.errors[:email].present? %></span>
+      </div>
 
-        <div class="form-group <%='has-error' if @contact.errors[:first_name].present? %> ">
-          <label class="control-label" >First Name</label>
-          <%= f.text_field :first_name, {:class => 'form-control'} %>
-          <span class="help-block"><%= @contact.errors[:first_name].join(',') if @contact.errors[:first_name].present? %></span>
-        </div>
+      <div class="form-group <%= 'has-error' if @contact.errors[:first_name].present? %> ">
+        <label class="control-label">First Name</label>
+        <%= f.text_field :first_name, {:class => 'form-control'} %>
+        <span class="help-block"><%= @contact.errors[:first_name].join(',') if @contact.errors[:first_name].present? %></span>
+      </div>
 
-        <div class="form-group <%='has-error' if @contact.errors[:last_name].present? %> ">
-          <label class="control-label" >Last Name</label>
-          <%= f.text_field :last_name, {:class => 'form-control'} %>
-          <span class="help-block"><%= @contact.errors[:last_name].join(',') if @contact.errors[:last_name].present? %></span>
-        </div>
+      <div class="form-group <%= 'has-error' if @contact.errors[:last_name].present? %> ">
+        <label class="control-label">Last Name</label>
+        <%= f.text_field :last_name, {:class => 'form-control'} %>
+        <span class="help-block"><%= @contact.errors[:last_name].join(',') if @contact.errors[:last_name].present? %></span>
+      </div>
 
-        <button ic-target="#contactDiv" ic-post-to="/contacts" class="btn btn-primary">Save</button>
+      <button ic-target="#content" ic-post-to="/contacts" class="btn btn-primary">Save</button>
+      <button ic-target="#content" ic-get-from="/contacts" class="btn btn-danger">Cancel</button>
 
-        <button ic-target="#contactDiv" ic-get-from="/contacts" class="btn btn-danger">Cancel</button>
-
-      <% end %>
-    </div>
+    <% end %>
   </div>
 </div>
