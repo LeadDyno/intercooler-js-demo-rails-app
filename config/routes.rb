@@ -15,6 +15,7 @@ IntercoolerRailsDemo::Application.routes.draw do
   get 'basics' => 'basic#index'
   match 'basics/counter' => 'basic#counter', via: :all
 
+  # contacts
   resources :contacts do
     collection do
       match :contacts_table, via: [:get, :post]
@@ -22,9 +23,16 @@ IntercoolerRailsDemo::Application.routes.draw do
     end
   end
 
+  # slick nav example
   get 'slick_nav/tab1' => 'slick_nav#tab1'
   get 'slick_nav/tab2' => 'slick_nav#tab2'
   get 'slick_nav/tab3' => 'slick_nav#tab3'
+
+  # job UI
+  get 'job' => 'job#index'
+  match 'job/status' => 'job#status', via: :all
+  match 'job/status/txt' => 'job#status_txt', via: :all
+  match 'job/status/percent' => 'job#status_percent', via: :all
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

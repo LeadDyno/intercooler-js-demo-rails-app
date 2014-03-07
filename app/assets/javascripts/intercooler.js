@@ -135,6 +135,9 @@ var Intercooler = Intercooler || (function () {
       log("IC HEADER: redirecting to " + xhr.getResponseHeader("X-IC-Redirect"), _DEBUG);
       window.location = xhr.getResponseHeader("X-IC-Redirect");
     }
+    if (xhr.getResponseHeader("X-IC-CancelPolling") == "true") {
+      cancelPolling(elt);
+    }
     if (xhr.getResponseHeader("X-IC-Redirect")) {
       log("IC HEADER: redirecting to " + xhr.getResponseHeader("X-IC-Redirect"), _DEBUG);
       window.location = xhr.getResponseHeader("X-IC-Redirect");
@@ -397,19 +400,28 @@ var Intercooler = Intercooler || (function () {
   }
 
   function startPolling(elt) {
-    var interval = parseInterval(elt.attr('ic-poll'));
-    if(interval != null) {
-      var selector = icSelectorFor(elt);
-      log("POLL: Starting poll for element " + selector, _DEBUG);
-      var timerId = setInterval(function () {
-        var target = $(selector);
-        if (target.length == 0) {
-          log("POLL: Clearing poll for element " + selector, _DEBUG);
-          clearTimeout(timerId);
-        } else {
-          updateElement(target);
-        }
-      }, interval);
+    if(elt.data('ic-poll-interval-id') == null) {
+      var interval = parseInterval(elt.attr('ic-poll'));
+      if(interval != null) {
+        var selector = icSelectorFor(elt);
+        log("POLL: Starting poll for element " + selector, _DEBUG);
+        var timerId = setInterval(function () {
+          var target = $(selector);
+          if (target.length == 0) {
+            log("POLL: Clearing poll for element " + selector, _DEBUG);
+            clearTimeout(timerId);
+          } else {
+            updateElement(target);
+          }
+        }, interval);
+        elt.data('ic-poll-interval-id', timerId);
+      }
+    }
+  }
+
+  function cancelPolling(elt) {
+    if(elt.data('ic-poll-interval-id') != null) {
+      clearTimeout(elt.data('ic-poll-interval-id'));
     }
   }
 
@@ -516,14 +528,11 @@ var Intercooler = Intercooler || (function () {
       if (fp(dummy.text()) != target.attr('ic-fingerprint') || target.attr('ic-always-update') == 'true') {
         if (target.attr('ic-transition') == "none") {
           target.html(data);
-          updateIntercoolerMetaData(target);
-          processNodes(target.children());
-          log("IC RESPONSE: Replacing " + target.html() + " with " + newElt.html(), _DEBUG);
+          processNodes(target);
         } else {
           target.fadeOut('fast', function () {
             target.html(data);
-            updateIntercoolerMetaData(target);
-            processNodes(target.children());
+            processNodes(target);
             target.fadeIn('fast');
           });
         }
@@ -538,16 +547,6 @@ var Intercooler = Intercooler || (function () {
       handleRemoteRequest(element, "GET", elt.attr('ic-src'), getParametersForElement(elt),
         function (data) {
           processICResponse(data, elt);
-        });
-    } else if (elt.attr('ic-text-src')) {
-      handleRemoteRequest(element, "GET", elt.attr('ic-text-src'), getParametersForElement(elt),
-        function (data) {
-          if(data != elt.text()) {
-            elt.fadeOut('fast', function(){
-              elt.text(data);
-              elt.fadeIn('fast');
-            })
-          }
         });
     } else if (elt.attr('ic-prepend-from')) {
       handleRemoteRequest(element, "GET", elt.attr('ic-prepend-from'), getParametersForElement(elt),
