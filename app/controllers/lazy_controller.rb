@@ -1,11 +1,9 @@
 class LazyController < ApplicationController
 
   def index
-    if params[:url]
-      sleep(1.3)
-      render inline: "<img src='#{params[:url]}' width='100%'>"
-    else
-      @images = Google::Search::Image.new(:query => 'FJ40').to_a[1..9]
+    if params[:img]
+      image = Google::Search::Image.new(:query => 'FJ40').to_a[params[:img].to_i]
+      render inline: "<img src='#{image.uri}' width='100%'>"
     end
   end
 

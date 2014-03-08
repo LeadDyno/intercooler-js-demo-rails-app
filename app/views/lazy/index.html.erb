@@ -1,7 +1,7 @@
 <div class="text-center">
   <h3>The Mighty Toyota Landcruiser...</h3>
-  <% @images.each do |img| %>
-    <div ic-src="/lazy?<%= {url:img.uri}.to_query %>" ic-lazy="true" style="display:inline-block;width:33%">
+  <% 9.times do |i| %>
+    <div ic-src="/lazy?<%= {img:i}.to_query %>" ic-lazy="true" style="display:inline-block;width:33%">
       <i class="fa fa-spinner fa-spin ic-indicator"></i>
     </div>
   <% end %>
