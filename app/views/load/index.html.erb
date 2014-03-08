@@ -1,0 +1,44 @@
+<% unless params['ic-request'] == 'true' %>
+
+  <h2>Behold, The Infinite Time Sink!</h2>
+
+  <div class="hn-row">
+    <div>
+      Comments
+    </div>
+    <div>
+      Points
+    </div>
+  </div>
+
+<% end %>
+
+<% @entries.each do |entry| %>
+  <div class="hn-row">
+    <a href="<%= entry.comments_url %>">
+      <div>
+        <%= entry.comments_count %>
+      </div>
+      <div>
+        <%= entry.voting.score %>
+      </div>
+    </a>
+    <a href="<%= entry.link.href %>">
+      <%= entry.link.title %>
+      (<%= entry.link.site %>)
+    </a>
+  </div>
+<% end %>
+
+<div id="page-<%= @page + 1 %>">
+
+  <div class="text-center">
+    <hr/>
+    <button class="btn btn-primary btn-lg" ic-target="#page-<%= @page + 1 %>"
+            ic-get-from="/load/<%= @page + 1 %>">
+      Load Yet More Time Wasting Material...
+      <i class="fa fa-spinner fa-spin ic-indicator" style="display: none"></i>
+    </button>
+  </div>
+
+</div>

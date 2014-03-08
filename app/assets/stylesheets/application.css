@@ -103,3 +103,14 @@ p {
     padding-left: 0;
   }
 }
+
+.hn-row div {
+  display: inline-block;
+}
+
+.hn-row div:nth-child(1) {
+  width: 100px;
+}
+.hn-row div:nth-child(2) {
+  width: 100px;
+}

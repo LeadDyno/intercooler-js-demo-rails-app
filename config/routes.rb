@@ -34,6 +34,9 @@ IntercoolerRailsDemo::Application.routes.draw do
   match 'job/status/txt' => 'job#status_txt', via: :all
   match 'job/status/percent' => 'job#status_percent', via: :all
 
+
+  get '/load(/:page)' => 'load#index'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
