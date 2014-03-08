@@ -514,10 +514,24 @@ var Intercooler = Intercooler || (function () {
     });
   }
 
+  function maybeLazyLoad(elt) {
+    if ($(elt).attr('ic-lazy') == 'true' && $(elt).data('ic-lazy-loaded') != true) {
+      $(elt).data('ic-lazy-loaded', true);
+      updateElement(elt);
+    }
+  }
+  function loadLazyNodes(elt) {
+    maybeLazyLoad(elt);
+    $(elt).find('[ic-lazy]').each(function () {
+      maybeLazyLoad($(this));
+    });
+  }
+
   function processNodes(elt) {
     processSources(elt);
     processPolling(elt);
     processDestinations(elt);
+    loadLazyNodes(elt)
   }
 
   function processICResponse(data, elt) {

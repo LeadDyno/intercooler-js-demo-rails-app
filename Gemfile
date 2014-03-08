@@ -47,3 +47,5 @@ gem 'pg'
 gem 'rails_serve_static_assets', group: [:production]
 
 gem 'ruby-hackernews'
+
+gem 'google-search'

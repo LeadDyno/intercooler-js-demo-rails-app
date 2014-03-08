@@ -36,6 +36,7 @@ IntercoolerRailsDemo::Application.routes.draw do
 
 
   get '/load(/:page)' => 'load#index'
+  get '/lazy(/:image)' => 'lazy#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
