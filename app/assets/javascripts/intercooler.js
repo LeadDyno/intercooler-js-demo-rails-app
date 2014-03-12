@@ -196,16 +196,20 @@ var Intercooler = Intercooler || (function () {
     elt.removeClass('disabled')
   }
 
+  function replaceOrAddMethod(data, actualMethod) {
+    var regex = /(&|^)_method=[^&]*/;
+    var content = "_method=" + actualMethod;
+    if(regex.test(data)) {
+      return data.replace(regex, content)
+    } else {
+      return data + "&" + content;
+    }
+  }
+
   function handleRemoteRequest(elt, type, url, data, success) {
-    if(type == "PUT") {
-      data += "&_method=PUT";
-    }
-    if(type == "DELETE") {
-      data += "&_method=DELETE";
-    }
-    if (data.indexOf("&authenticity_token=") == -1 && $('meta[name=csrf-token]').length > 0) {
-      data += "&authenticity_token=" + $('meta[name=csrf-token]').attr('content');
-    }
+
+    data = replaceOrAddMethod(data, type);
+
     var pop = data.indexOf("&ic-handle-pop=true") >= 0;
 
     for (var i = 0, l = _urlHandlers.length; i < l; i++) {
