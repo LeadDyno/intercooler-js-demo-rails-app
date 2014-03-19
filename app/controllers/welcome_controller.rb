@@ -4,11 +4,6 @@ class WelcomeController < ApplicationController
     render layout: params['ic-request'].blank?
   end
 
-  def script
-    response.headers['X-IC-Script'] = "alert('Hello! This is a script from the server side!');"
-    render nothing:true
-  end
-
   def flash_div
     render :partial => 'layouts/flash'
   end

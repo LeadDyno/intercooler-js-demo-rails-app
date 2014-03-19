@@ -150,12 +150,17 @@ var Intercooler = Intercooler || (function () {
       log("IC HEADER: pushing " + xhr.getResponseHeader("X-IC-SetLocation"), _DEBUG);
       _historySupport.pushUrl(xhr.getResponseHeader("X-IC-SetLocation"), elt);
     }
+    if(xhr.getResponseHeader("X-IC-Transition")) {
+      log("IC HEADER: setting transition to  " + xhr.getResponseHeader("X-IC-Transition"), _DEBUG);
+      var target = getTarget(elt);
+      target.data("ic-tmp-transition", xhr.getResponseHeader("X-IC-Transition"));
+    }
     if (xhr.getResponseHeader("X-IC-Remove")) {
       log("IC HEADER REMOVE COMMAND");
       if (elt) {
         var target = getTarget(elt);
         log("IC REMOVING: " + target.html(), _DEBUG);
-        if (target.attr('ic-transition') == "none") {
+        if (isTransition(target, "none")) {
           target.remove();
         } else {
           target.fadeOut('fast', function () {
@@ -258,8 +263,9 @@ var Intercooler = Intercooler || (function () {
       dataType: 'text',
       success: function (data, textStatus, xhr) {
         if (processHeaders(elt, xhr, pop)) {
-          success(data, textStatus, elt, xhr)
+          success(data, textStatus, elt, xhr);
         }
+        getTarget(elt).data("ic-tmp-transition", null);
       },
       error: function (req, status, str) {
         log("An error occurred: " + str, _ERROR);
@@ -538,13 +544,24 @@ var Intercooler = Intercooler || (function () {
     loadLazyNodes(elt)
   }
 
+  function isTransition(target, transitionName) {
+    console.log("0000");
+    console.log(transitionName);
+    console.log(target.attr('ic-transition'));
+    console.log(target.data('ic-tmp-transition'));
+    console.log(target);
+    console.log("0000");
+    return target.attr('ic-transition') == transitionName ||
+           target.data('ic-tmp-transition') == transitionName;
+  }
+
   function processICResponse(data, elt) {
     if (data && /\S/.test(data)) {
       log("IC RESPONSE: Received: " + data, _DEBUG);
       var target = getTarget(elt);
       var dummy = $("<div></div>").html(data);
       if (fp(dummy.text()) != target.attr('ic-fingerprint') || target.attr('ic-always-update') == 'true') {
-        if (target.attr('ic-transition') == "none") {
+        if (isTransition(target, 'none')) {
           target.html(data);
           processNodes(target);
         } else {

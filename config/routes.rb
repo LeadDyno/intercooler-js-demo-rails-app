@@ -13,7 +13,12 @@ IntercoolerRailsDemo::Application.routes.draw do
   post 'flash_alert' => 'welcome#flash_alert'
 
   get 'basics' => 'basic#index'
-  match 'basics/counter' => 'basic#counter', via: :all
+  match 'basics/script' => 'basic#script', via: :all
+  get 'basics/counter' => 'basic#counter'
+  get 'basics/spinner' => 'basic#spinner'
+  post 'basics/click' => 'basic#click'
+  match 'basics/count/(:delay)' => 'basic#count', via: :all
+  match 'basics/flash_demo' => 'basic#flash_demo', via: :all
 
   # contacts
   resources :contacts do

@@ -28,6 +28,7 @@ class ContactsController < ApplicationController
       render nothing:true
     else
       flash[:alert] = 'Could Not Save Contact...'
+      response.header['X-IC-Transition'] = 'none'
       render :layout => request['ic-request'].blank?, :action => :new
     end
   end
@@ -39,6 +40,7 @@ class ContactsController < ApplicationController
       render :layout => request['ic-request'].blank?, :action => :show
     else
       flash[:alert] = 'Could Not Save Contact...'
+      response.header['X-IC-Transition'] = 'none'
       render :layout => request['ic-request'].blank?, :action => :edit
     end
   end

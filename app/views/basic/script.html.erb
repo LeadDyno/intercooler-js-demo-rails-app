@@ -1,0 +1,31 @@
+<h1>Using Response Headers To Evaluate A Script</h1>
+
+<p>Here is a simple button that makes a post to the server and then executes the javascript return
+  (passed back from the server via <a href="http://intercoolerjs.org/responses.html#http_headers">Intercooler HTTP Headers</a>)</p>
+
+<p>Only evaluating a script isn't a common way to use Intercooler: you typically use HTML partials, targets and
+  <a href="http://intercoolerjs.org/dependencies.html">dependencies</a> to get the UX you want, but this can be a
+  useful side-channel in a pinch.</p>
+
+<h3>Code</h3>
+
+<h4>HTML</h4>
+<pre>
+  &lt;button ic-post-to="/basic/script" class="btn btn-primary">Execute It!&lt;/button>
+</pre>
+
+<h4>Rails</h4>
+<pre>
+  def script
+    if request.post?
+      response.headers['X-IC-Script'] = "alert('Hello! This is a script from the server side!');"
+      render nothing:true
+    end
+  end
+</pre>
+
+
+<h3>Demo</h3>
+
+<button ic-post-to="/basics/script" class="btn btn-primary">Execute It!</button>
+

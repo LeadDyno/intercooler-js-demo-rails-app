@@ -1,0 +1,60 @@
+
+<h1>Dependency Example</h1>
+
+<p>This example uses the dependencies framework in Intercooler to update the UI (rather than an explicit target)</p>
+
+<p>When you click on the button, it will POST to the <code>/basics/count</code> URL on the server.  When this request
+   completes, Intercooler will detect that the div below depends on the URL that was POSTed to, and a GET will
+  be issued to <code>/basics/count</code> to retrieve a new version, rendering the updated count.</p>
+
+<h3>Code</h3>
+
+<h4>HTML</h4>
+<pre>
+&lt;div class="btn btn-primary" ic-post-to="/basics/count">
+  Increment
+&lt;/div>
+
+&lt;div class="btn btn-danger" ic-delete-from="/basics/count">
+  Reset
+&lt;/div>
+
+&lt;div ic-src="/basics/count">
+  &lt;%= render :partial => 'count' %>
+&lt;/div>
+  </pre>
+
+<h4>Rails</h4>
+<pre>
+
+  def count
+    if request.post?
+      if params[:delay]
+        sleep(params[:delay].to_i)
+      end
+      session[:counter] ||=0
+      session[:counter] += 1
+      render nothing:true
+    elsif request.delete?
+      session[:counter] = 0
+      render nothing:true
+    else
+      render partial: 'basic/count'
+    end
+  end
+  </pre>
+
+
+<h3>Demo</h3>
+
+<div class="btn btn-primary" ic-post-to="/basics/count">
+  Increment
+</div>
+
+<div class="btn btn-danger" ic-delete-from="/basics/count">
+  Reset
+</div>
+
+<div ic-src="/basics/count">
+  <%= render :partial => 'count' %>
+</div>

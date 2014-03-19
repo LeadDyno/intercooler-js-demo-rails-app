@@ -1,0 +1,39 @@
+<h1>Using The Rails Flash</h1>
+
+<p>IntercoolerJS is very Rails friendly. As an example, the flash for this application has been
+  extracted to a partial, and set up to refresh when any Intercooler-enabled button is clicked:</p>
+
+<pre>
+  &lt;div id="flash-div" ic-src="/flash" ic-deps="*" ic-always-update="true">
+
+    &lt;% if flash[:notice] %>
+      &lt;div class="alert alert-info">&lt;%= flash[:notice] %>&lt;/div>
+    &lt;% end %>
+
+    &lt;% if flash[:alert] %>
+      &lt;div class="alert alert-error">&lt;%= flash[:alert] %>&lt;/div>
+    &lt;% end %>
+
+    &lt;script>
+      $(function(){
+        setTimeout(function(){
+          $("#flash-div").fadeOut();
+        }, 2000);
+      })
+    &lt;/script>
+
+  &lt;/div>
+</pre>
+
+<p>Here are a couple of buttons that punch values into the flash via AJAX requests. Intercooler automatically
+  refreshes the flash (note it depends on any action, via a <code>ic-deps</code> annotation):</p>
+
+<h4>Demo</h4>
+
+<button ic-post-to="/flash_notice" class="btn btn-primary">Post A Notice</button>
+<button ic-post-to="/flash_alert" class="btn btn-danger">Post An Alert!</button>
+
+<p>This lets you continue to use the flash the way you always have when using Intercooler actions. And, since
+  it is using <strong>Just Another Partial&trade;</strong>, it works just fine if you are mixing traditional Rails
+  code (or any other traditional
+  web framework for that matter!) with your Intercooler code.</p>

@@ -1,0 +1,63 @@
+
+<h1>Spinner Example</h1>
+
+<p>This example is identical to the dependencies example, except that it adds a spinner indicator to the button to
+make it more obvious that something is happening.</p>
+
+<p>To do this, you simply add a hidden element with the <code>ic-indicator</code> class on it.  Alternatively, you
+can use the <code>ic-indicator</code> attribute on the element (or a parent element) to provide a selector for the
+indicator element.</p>
+
+<h3>Code</h3>
+
+<h4>HTML</h4>
+<pre>
+&lt;div class="btn btn-primary" ic-post-to="/basics/count/2">
+  Increment
+  &lt;i class="fa fa-spinner fa-spin ic-indicator" style="display:none">&lt;/i>
+&lt;/div>
+
+&lt;div class="btn btn-danger" ic-delete-from="/basics/count">
+  Reset
+&lt;/div>
+
+&lt;div ic-src="/basics/count">
+  &lt;%= render :partial => 'count' %>
+&lt;/div>
+  </pre>
+
+<h4>Rails</h4>
+<pre>
+
+  def count
+    if request.post?
+      if params[:delay]
+        sleep(params[:delay].to_i)
+      end
+      session[:counter] ||=0
+      session[:counter] += 1
+      render nothing:true
+    elsif request.delete?
+      session[:counter] = 0
+      render nothing:true
+    else
+      render partial: 'basic/count'
+    end
+  end
+  </pre>
+
+
+<h3>Demo</h3>
+
+<div class="btn btn-primary" ic-post-to="/basics/count/2">
+  Increment
+  <i class="fa fa-spinner fa-spin ic-indicator" style="display:none"></i>
+</div>
+
+<div class="btn btn-danger" ic-delete-from="/basics/count">
+  Reset
+</div>
+
+<div ic-src="/basics/count">
+  <%= render :partial => 'count' %>
+</div>
