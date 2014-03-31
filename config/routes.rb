@@ -45,6 +45,7 @@ IntercoolerRailsDemo::Application.routes.draw do
 
 
   get '/load(/:page)' => 'load#index'
+  get '/infinite(/:page)' => 'load#infinite'
   get '/lazy(/:image)' => 'lazy#index'
 
   # Example of regular route:

@@ -28,6 +28,7 @@ var Intercooler = Intercooler || (function () {
   var _logger = window.console;
   var _loggingLevel = null;
   var _loggingGrep = null;
+  var _scrollHandler = null;
 
   //============================================================
   // Utility Methods
@@ -526,16 +527,51 @@ var Intercooler = Intercooler || (function () {
     });
   }
 
-  function maybeLazyLoad(elt) {
-    if ($(elt).attr('ic-lazy') == 'true' && $(elt).data('ic-lazy-loaded') != true) {
-      $(elt).data('ic-lazy-loaded', true);
-      updateElement(elt);
+  function isScrolledIntoView(elem) {
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+
+    var elemTop = $(elem).offset().top;
+    var elemBottom = elemTop + $(elem).height();
+
+    return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom)
+      && (elemBottom <= docViewBottom) &&  (elemTop >= docViewTop) );
+  }
+
+  function handleLoadOn(elt) {
+    if ($(elt).attr('ic-load-on')) {
+      if($(elt).attr('ic-load-on') == 'load') {
+        updateElement(elt);
+      } else if($(elt).attr('ic-load-on') == 'scrolled-into-view') {
+        if(isScrolledIntoView(elt) && elt.data('ic-scrolled-into-view-loaded') != true){
+          $(this).data('ic-scrolled-into-view-loaded', true);
+          updateElement($(this));
+        } else {
+          if(_scrollHandler == null) {
+            _scrollHandler = function() {
+              $("[ic-load-on='scrolled-into-view']").each(function(){
+                if(isScrolledIntoView($(this)) && $(this).data('ic-scrolled-into-view-loaded') != true){
+                  $(this).data('ic-scrolled-into-view-loaded', true);
+                  updateElement($(this));
+                }
+              })
+            };
+            $(window).scroll(_scrollHandler);
+          }
+        }
+
+      } else {
+        $(elt).on($(elt).attr('ic-load-on'), function(){
+          updateElement(elt);
+        });
+      }
     }
   }
-  function loadLazyNodes(elt) {
-    maybeLazyLoad(elt);
-    $(elt).find('[ic-lazy]').each(function () {
-      maybeLazyLoad($(this));
+
+  function processLoadOn(elt) {
+    handleLoadOn(elt);
+    $(elt).find('[ic-load-on]').each(function () {
+      handleLoadOn($(this));
     });
   }
 
@@ -543,7 +579,7 @@ var Intercooler = Intercooler || (function () {
     processSources(elt);
     processPolling(elt);
     processDestinations(elt);
-    loadLazyNodes(elt)
+    processLoadOn(elt)
   }
 
   function isTransition(target, transitionName) {
