@@ -1,46 +1,34 @@
-<div id="content-div">
-  <div class="row">
-    <div class="col-md-12">
+<h1>Table Editing/Bulk update</h1>
 
-      <h1>Bulk Update Example</h1>
+<p>This is a great example of how easy it is to implement table-editing actions in Intercooler.  The dropdown above the
+table includes the checked IDs via the <code>ic-include</code> attribute, and the table automatically refreshes
+due to dependency detection.  Easy peasy.</p>
 
-      <p>This is a great example of the </p>
+<div class="pull-right">
 
-      <p>Note that the URL does not change on the page, editing is effectively a mode within this page.</p>
+  <i id="table-action-spinner" class="fa fa-spinner fa-spin ic-indicator" style="display: none"></i>
 
-      <h4>Demo</h4>
-
-      <h2>Contacts</h2>
-
-      <div class="pull-right">
-
-        <i id="table-action-spinner" class="fa fa-spinner fa-spin ic-indicator" style="display: none"></i>
-
-        <div class="btn-group " ic-indicator="#table-action-spinner">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Bulk Actions <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a id="activate_btn" ic-post-to="/contacts/contacts_table" ic-include="#ids">Mark Active</a></li>
-            <li><a id="deactivate_btn" ic-post-to="/contacts/contacts_table" ic-include="#ids">Mark Inactive</a></li>
-            <li class="divider"></li>
-            <li><a id="bad_action" ic-post-to="/contacts/contacts_table" ic-include="#ids">Bad Action</a></li>
-            <li class="divider"></li>
-            <li><a ic-get-from="/contacts/new" ic-target="#content-div">New Contact</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-    </div>
+  <div class="btn-group " ic-indicator="#table-action-spinner">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Bulk Actions <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a id="activate_btn" ic-post-to="/contacts/contacts_table" ic-include="#ids">Mark Active</a></li>
+      <li><a id="deactivate_btn" ic-post-to="/contacts/contacts_table" ic-include="#ids">Mark Inactive</a></li>
+      <li class="divider"></li>
+      <li><a id="bad_action" ic-post-to="/contacts/contacts_table" ic-include="#ids">Bad Action</a></li>
+      <li class="divider"></li>
+      <li><a ic-get-from="/contacts/new" ic-target="#content-div">New Contact</a></li>
+    </ul>
   </div>
 
-  <form id="ids">
-    <div class="row">
-      <div class="col-md-12" ic-src="/contacts/contacts_table">
-        <%= render :partial => 'contacts_table' %>
-      </div>
-    </div>
-  </form>
-
 </div>
+
+
+<form id="ids">
+  <div class="row">
+    <div class="col-md-12" ic-src="/contacts/contacts_table">
+      <%= render :partial => 'contacts_table' %>
+    </div>
+  </div>
+</form>

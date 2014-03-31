@@ -254,7 +254,7 @@ var Intercooler = Intercooler || (function () {
 
     // Spinner support
     var spinner = findSpinner(elt);
-    spinner.fadeIn();
+    spinner.fadeIn('fast');
 
     _remote.ajax({
       type: type,
@@ -272,7 +272,7 @@ var Intercooler = Intercooler || (function () {
       },
       complete : function(){
         if(spinner.length > 0) {
-          spinner.fadeOut(function(){
+          spinner.fadeOut('fast', function(){
             afterRequest(elt);
           });
         } else {

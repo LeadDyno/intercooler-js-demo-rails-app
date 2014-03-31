@@ -20,6 +20,18 @@ class ContactsController < ApplicationController
     render :layout => request['ic-request'].blank?
   end
 
+  def inline_validation
+    @contact = Contact.find(params[:id])
+    render :layout => request['ic-request'].blank?
+  end
+
+  def email_input
+    @contact = Contact.find(params[:id])
+    @contact.email = params[:contact][:email]
+    @contact.valid?
+    render partial:'email_input'
+  end
+
   def create
     @contact = Contact.new(params.require(:contact).permit(:email, :first_name, :last_name))
     if  @contact.save

@@ -26,6 +26,10 @@ IntercoolerRailsDemo::Application.routes.draw do
       match :contacts_table, via: [:get, :post]
       get :click_to_edit
     end
+    member do
+      get :inline_validation
+      post :email_input
+    end
   end
 
   # slick nav example
