@@ -1,15 +1,38 @@
-<h1>Table Editing/Bulk update</h1>
+<h1>Bulk Updating In Intercooler</h1>
 
-<p>This is a great example of how easy it is to implement table-editing actions in Intercooler.  The dropdown above the
-table includes the checked IDs via the <code>ic-include</code> attribute, and the table automatically refreshes
-due to dependency detection.  Easy peasy.</p>
+<p>This example shows how easy it is to implement bulk "table-editing" actions in Intercooler.  The dropdown above the
+table includes the IDs of the checked rows via the <code>ic-include</code> attribute, and the table automatically
+  refreshes due to dependency detection.</p>
+
+<h3>Code</h3>
+
+<h4>HTML</h4>
+
+<pre>
+  &lt;i id="table-action-spinner" class="fa fa-spinner fa-spin" style="display: none">&lt;/i>
+  &lt;div class="btn-group " ic-indicator="#table-action-spinner">
+    &lt;button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Bulk Actions &lt;span class="caret">&lt;/span>
+    &lt;/button>
+    &lt;ul class="dropdown-menu" role="menu">
+      &lt;li>&lt;a id="activate_btn" ic-post-to="/contacts/contacts_table" ic-include="#ids">Mark Active&lt;/a>&lt;/li>
+      ...
+    &lt;/ul>
+  &lt;/div>
+</pre>
+
+<p>On the server side, we use the id of the element that caused the <code>POST</code> to determine the action to take.</p>
+
+<p>Also note that we use the <code>ic-indicator</code> on a parent of the action buttons, so they all use the same
+indicator.</p>
+
+<h3>Demo</h3>
 
 <div class="pull-right">
 
-  <i id="table-action-spinner" class="fa fa-spinner fa-spin ic-indicator" style="display: none"></i>
-
+  <i id="table-action-spinner" class="fa fa-spinner fa-spin" style="display: none"></i>
   <div class="btn-group " ic-indicator="#table-action-spinner">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
       Bulk Actions <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">

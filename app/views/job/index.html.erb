@@ -1,8 +1,25 @@
-<h1>Job UI</h1>
+<h1>A Progress Bar UI</h1>
 
-<p>Here is an example of a Job Runner UI that polls a background process and updates the UI.</p>
+<p>This example shows a live progress bar being updated via the <code>ic-style-src</code> attribute.</p>
 
-<hr/>
+<h3>Code</h3>
+
+<h4>HTML</h4>
+
+<pre>
+  &lt;div class="progress progress-striped active">
+    &lt;div class="progress-bar"
+         ic-style-src="width:/job/status/percent"
+         ic-poll="1s"
+         role="progressbar"
+         style="width: &lt;%= @job.percent_str %>">&lt;/div>
+  &lt;/div>
+</pre>
+
+<p>This is the code for the progress bar only.  There are a few actions associated with the buttons as well that
+start the job, etc. allowing hte outer div to refresh via dependencies.</p>
+
+<h3>Demo</h3>
 
 <div ic-src="/job/status">
   <%= render :partial => 'status' %>
