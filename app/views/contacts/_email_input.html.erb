@@ -3,7 +3,8 @@
   <input class="form-control"
          ic-indicator="#email-indicator"
          ic-post-to="/contacts/1/email_input"
-         ic-target="#email-wrapper"
+         ic-target="#email-input"
+         ic-transition="none"
          name="contact[email]"
          value="<%=@contact.email%>"/>
   <span class="help-block"><%= @contact.errors[:email].join(',') if @contact.errors[:email].present? %></span>

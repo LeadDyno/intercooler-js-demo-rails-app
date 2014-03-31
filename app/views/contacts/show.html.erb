@@ -1,11 +1,33 @@
-<h1>Click To Edit Example</h1>
+<h1>Editing Example</h1>
 
-<p>Here is a simple contact display UI. By clicking the "Click To Edit" button below, this UI will be swapped out
-  for an form to edit the contact with.</p>
+<p>This example shows how the standard rails editing mechanism can be used to get inline editing in an application.</p>
 
-<p>Note that the URL does not change on the page, editing is effectively a mode within this page.</p>
+<p>When you click edit, the UI will be replaced with a form for this contact, which includes an inline server-side
+validation of the email of the contact.</p>
 
-<h4>Demo</h4>
+<h3>Code</h3>
+
+<h4>HTML</h4>
+
+<pre>
+    &lt;button ic-target="#content" ic-get-from="&lt;%= edit_contact_path @contact %>"
+            class="btn btn-primary">
+      Click To Edit
+    &lt;/button>
+</pre>
+
+<p>Note that we target the <code>#content</code> div with the edit button, so the <code>edit_contact_path</code> will
+be hit with a <code>GET</code> and the response will be swapped in for the content of the page.</p>
+
+<h4>Rails</h4>
+
+<p>The rails code is too large to include here, but it follows the standard rails patterns and can be viewed here:</p>
+
+<a href="https://github.com/LeadDyno/intercooler-js-demo-rails-app/blob/master/app/controllers/contacts_controller.rb">
+  https://github.com/LeadDyno/intercooler-js-demo-rails-app/blob/master/app/controllers/contacts_controller.rb
+</a>
+
+<h3>Demo</h3>
 
 <h2>Contact Details</h2>
 

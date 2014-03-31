@@ -262,10 +262,12 @@ var Intercooler = Intercooler || (function () {
       data: data,
       dataType: 'text',
       success: function (data, textStatus, xhr) {
+        var target = getTarget(elt);
+        target.data("ic-tmp-transition",  elt.attr('ic-transition'));
         if (processHeaders(elt, xhr, pop)) {
           success(data, textStatus, elt, xhr);
         }
-        getTarget(elt).data("ic-tmp-transition", null);
+        target.data("ic-tmp-transition", null);
       },
       error: function (req, status, str) {
         log("An error occurred: " + str, _ERROR);
@@ -545,12 +547,6 @@ var Intercooler = Intercooler || (function () {
   }
 
   function isTransition(target, transitionName) {
-    console.log("0000");
-    console.log(transitionName);
-    console.log(target.attr('ic-transition'));
-    console.log(target.data('ic-tmp-transition'));
-    console.log(target);
-    console.log("0000");
     return target.attr('ic-transition') == transitionName ||
            target.data('ic-tmp-transition') == transitionName;
   }
