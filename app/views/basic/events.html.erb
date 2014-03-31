@@ -1,0 +1,49 @@
+<h1>Events Example</h1>
+
+<p>Intercooler exposes some javascript events.  You can use this to add additional parameters to be send with
+intercooler requests, or to update the UI. </p>
+
+<p>In this demo, we use the <a href="http://malsup.com/jquery/block/">BlockUI</a> plugin to block the UI while a request is
+in flight.</p>
+
+<h3>Code</h3>
+
+<h4>Javascript</h4>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.61.0-2013.06.06/jquery.blockUI.min.js"></script>
+<script>
+  $(function(){
+    $('.btn').on('ic.beforeSend', function(){
+      $.blockUI();
+    }).on('ic.complete', function(){
+        $.unblockUI();
+    });
+  })
+</script>
+
+<pre>
+&lt;script src="//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.61.0-2013.06.06/jquery.blockUI.min.js">&lt;/script>
+&lt;script>
+  $(function(){
+    $('.btn').on('ic.beforeSend', function(){
+      $.blockUI();
+    }).on('ic.complete', function(){
+      $.unblockUI();
+    });
+  })
+&lt;/script>
+</pre>
+
+<h3>Demo</h3>
+
+<div class="btn btn-primary" ic-post-to="/basics/count/2">
+  Increment
+</div>
+
+<div class="btn btn-danger" ic-delete-from="/basics/count">
+  Reset
+</div>
+
+<div ic-src="/basics/count">
+  <%= render :partial => 'count' %>
+</div>

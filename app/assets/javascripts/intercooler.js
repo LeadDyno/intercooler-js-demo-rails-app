@@ -121,6 +121,9 @@ var Intercooler = Intercooler || (function () {
   }
 
   function processHeaders(elt, xhr, pop) {
+
+    elt.trigger("ic.beforeHeaders", elt, xhr);
+
     if (xhr.getResponseHeader("X-IC-Refresh")) {
       var pathsToRefresh = xhr.getResponseHeader("X-IC-Refresh").split(",");
       log("IC HEADER: refreshing " + pathsToRefresh, _DEBUG);
@@ -170,6 +173,9 @@ var Intercooler = Intercooler || (function () {
         }
       }
     }
+
+    elt.trigger("ic.afterHeaders", elt, xhr);
+
     return true;
   }
 
@@ -262,18 +268,24 @@ var Intercooler = Intercooler || (function () {
       url: url,
       data: data,
       dataType: 'text',
+      beforeSend : function(){
+        elt.trigger("ic.beforeSend", elt, data);
+      },
       success: function (data, textStatus, xhr) {
+        elt.trigger("ic.success", elt, data, textStatus, xhr);
         var target = getTarget(elt);
-        target.data("ic-tmp-transition",  elt.attr('ic-transition'));
+        target.data("ic-tmp-transition",  elt.attr('ic-transition')); // copy transition
         if (processHeaders(elt, xhr, pop)) {
           success(data, textStatus, elt, xhr);
         }
         target.data("ic-tmp-transition", null);
       },
       error: function (req, status, str) {
+        elt.trigger("ic.error", elt, req, status, str);
         log("An error occurred: " + str, _ERROR);
       },
       complete : function(){
+        elt.trigger("ic.complete", elt, data);
         if(spinner.length > 0) {
           spinner.fadeOut('fast', function(){
             afterRequest(elt);
@@ -420,6 +432,7 @@ var Intercooler = Intercooler || (function () {
         log("POLL: Starting poll for element " + selector, _DEBUG);
         var timerId = setInterval(function () {
           var target = $(selector);
+          elt.trigger("ic.onPoll", target);
           if (target.length == 0) {
             log("POLL: Clearing poll for element " + selector, _DEBUG);
             clearTimeout(timerId);

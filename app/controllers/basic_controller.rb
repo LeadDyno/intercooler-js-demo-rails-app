@@ -41,4 +41,7 @@ class BasicController < ApplicationController
   def flash_demo
   end
 
+  def events
+  end
+
 end

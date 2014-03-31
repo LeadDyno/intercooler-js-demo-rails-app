@@ -19,6 +19,7 @@ IntercoolerRailsDemo::Application.routes.draw do
   post 'basics/click' => 'basic#click'
   match 'basics/count/(:delay)' => 'basic#count', via: :all
   match 'basics/flash_demo' => 'basic#flash_demo', via: :all
+  get 'basics/events' => 'basic#events'
 
   # contacts
   resources :contacts do
