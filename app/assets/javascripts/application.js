@@ -21,4 +21,4 @@ $(function(){
   });
 });
 
-Intercooler.setLogLevel(Intercooler.logLevels.DEBUG);
+//Intercooler.setLogLevel(Intercooler.logLevels.DEBUG);
