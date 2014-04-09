@@ -1,0 +1,84 @@
+<% unless params['ic-request'] %>
+
+  <h1>Infinite Table</h1>
+
+  <p>This example shows the infinite-load pattern within a table, using the
+    <code>ic-append-from</code> and <code>ic-load-on='scroll-to-view'</code>
+    attributes to swap in more rows every time the bottom of the table is
+    scrolled into view.</p>
+
+  <h3>Code</h3>
+
+  <h4>HTML</h4>
+
+  <pre>
+&lt;div ic-src="/infinite/&lt;%= @page + 1 %>" ic-load-on="scrolled-into-view">
+  &lt;div class="text-center">
+    &lt;hr/>
+    Load Yet More Time Wasting Material...
+    &lt;i class="fa fa-spinner fa-spin ic-indicator" style="display: none">&lt;/i>
+  &lt;/div>
+&lt;/div>
+  </pre>
+
+  <h3>Demo</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Comments</th>
+        <th>Votes</th>
+        <th>Article</th>
+      </tr>
+    </thead>
+    <tbody id='tbody'>
+<% end %>
+
+<% @entries.each_with_index do |entry, i| %>
+  <tr
+  <% if i == 29 %>
+  ic-target="#tbody"
+  ic-indicator="#load-more-indicator"
+  ic-append-from="/infinite_table/<%= @page + 1 %>"
+  ic-load-on="scrolled-into-view"
+  <% end %>
+  >
+    <td>
+      <a href="<%= entry.comments_url %>">
+        <div>
+          <%= entry.comments_count %>
+        </div>
+      </a>
+    </td>
+    <td>
+      <a href="<%= entry.comments_url %>">
+        <div>
+          <%= entry.voting.score %>
+        </div>
+      </a>
+    </td>
+    <td>
+      <a href="<%= entry.link.href %>">
+        <%= entry.link.title %>
+        (<%= entry.link.site %>)
+      </a>
+    </td>
+  </tr>
+<% end %>
+
+<% unless params['ic-request'] %>
+
+    </tbody>
+  </table>
+
+<div>
+  <div class="text-center">
+    <hr/>
+    <div id="load-more-indicator" style="display: none">
+      Loading More...
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
+  </div>
+</div>
+
+<% end %>
