@@ -95,6 +95,10 @@ var Intercooler = Intercooler || (function () {
     return $("[ic-id='" + icId + "']");
   }
 
+  function findById(x) {
+    return $("[id='" + x + "']");
+  }
+
   function parseInterval(str) {
     log("POLL: Parsing interval string " + str, _DEBUG);
     if (str == "null" || str == "false" || str == "") {
@@ -711,47 +715,68 @@ var Intercooler = Intercooler || (function () {
         return window.location.pathname + window.location.search + window.location.hash;
       }
     },
+
     onPageLoad: function () {
       _historySupport.stateCache = {"ic-setlocation": true,
         "restore-from": window.location.pathname + window.location.search + window.location.hash,
         "timestamp": new Date().getTime()
+      };
+      if (window.onpopstate == null || window.onpopstate['ic-on-pop-state-handler'] != true) {
+        var currentOnPopState = window.onpopstate;
+        window.onpopstate = function(event) {
+          if(!_historySupport.handlePop(event)){
+            if(currentOnPopState) {
+              currentOnPopState(event);
+            }
+          }
+        };
+        window.onpopstate['ic-on-pop-state-handler'] = true;
       }
     },
+
     pushUrl: function (url, elt) {
       log("IC HISTORY: pushing location " + url, _DEBUG);
-      _historySupport.initHistory(elt);
       var target = getTarget(elt);
-      var id = getIntercoolerId(target);
-      var data = {"ic-setlocation": true,
-        "ic-id-to-restore": id.toString(),
+      var id = target.attr('id');
+      if(id == null) {
+        log("To support history for a given element, you must have a valid id attribute on the element", _ERROR);
+        return;
+      }
+      _historySupport.initHistory(elt);
+      var data = {
+        "ic-setlocation": true,
+        "id-to-restore": id.toString(),
         "restore-from": url,
         "timestamp": new Date().getTime()
       };
-      history.pushState(data, "", url);
+      elt.trigger("ic.pushUrl", target, data);
+      window.history.pushState(data, "", url);
     },
+
     initHistory: function (elt) {
-      if (window.onpopstate != _historySupport.handlePop) {
-        window.onpopstate = _historySupport.handlePop;
-      }
       if(_historySupport.stateCache) {
         var target = getTarget(elt);
-        var id = getIntercoolerId(target);
-        _historySupport.stateCache["ic-id-to-restore"] =  id.toString(),
-          history.replaceState(_historySupport.stateCache);
+        var id = target.attr('id');
+        _historySupport.stateCache["id-to-restore"] = id.toString();
+        window.history.replaceState(_historySupport.stateCache);
         _historySupport.stateCache = null;
       }
     },
+
     handlePop: function (event) {
       var data = event.state;
       if (data && data['ic-setlocation']) {
-        var elt = findByICId(data["ic-id-to-restore"]);
+        var elt = findById(data["id-to-restore"]);
         var params = getParametersForElement(elt);
         params += "&ic-handle-pop=true"
         handleRemoteRequest(elt, "GET", data["restore-from"], params,
           function (data) {
+            elt.trigger("ic.handlePop", elt, data);
             processICResponse(data, elt);
           });
+        return true;
       }
+      return false;
     }
   };
 
