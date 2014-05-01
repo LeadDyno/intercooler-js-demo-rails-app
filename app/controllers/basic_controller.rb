@@ -1,5 +1,7 @@
 class BasicController < ApplicationController
 
+  protect_from_forgery :except => :count
+
   def index
     session[:counter] ||=0
     render layout: params['ic-request'].blank?
@@ -20,7 +22,7 @@ class BasicController < ApplicationController
       if params[:delay]
         sleep(params[:delay].to_i)
       end
-      session[:counter] ||=0
+      session[:counter] ||= 0
       session[:counter] += 1
       render nothing:true
     elsif request.delete?

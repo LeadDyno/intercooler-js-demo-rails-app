@@ -3,7 +3,7 @@
   <h1>Infinite Table</h1>
 
   <p>This example shows the infinite-load pattern within a table, using the
-    <code>ic-append-from</code> and <code>ic-load-on='scroll-to-view'</code>
+    <code>ic-append-from</code> and <code>ic-trigger-on='scroll-to-view'</code>
     attributes to swap in more rows every time the bottom of the table is
     scrolled into view.</p>
 
@@ -12,7 +12,7 @@
   <h4>HTML</h4>
 
   <pre>
-&lt;div ic-src="/infinite/&lt;%= @page + 1 %>" ic-load-on="scrolled-into-view">
+&lt;div ic-src="/infinite/&lt;%= @page + 1 %>" ic-trigger-on="scrolled-into-view">
   &lt;div class="text-center">
     &lt;hr/>
     Load Yet More Time Wasting Material...
@@ -40,7 +40,7 @@
   ic-target="#tbody"
   ic-indicator="#load-more-indicator"
   ic-append-from="/infinite_table/<%= @page + 1 %>"
-  ic-load-on="scrolled-into-view"
+  ic-trigger-on="scrolled-into-view"
   <% end %>
   >
     <td>

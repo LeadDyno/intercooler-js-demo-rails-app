@@ -1,7 +1,7 @@
 <h1>Lazy Loading</h1>
 
 <p>This example shows lazy loading of divs within a page.  This is achieved using the <code>ic-src</code> and
-<code>ic-load-on</code> attributes.  Each div </p>
+<code>ic-trigger-on</code> attributes.  Each div </p>
 
 
 <h3>Code</h3>
@@ -9,7 +9,7 @@
 <h4>HTML</h4>
 
 <pre>
-    &lt;div ic-src="/lazy?&lt;%= {img:i}.to_query %>" ic-load-on="load">
+    &lt;div ic-src="/lazy?&lt;%= {img:i}.to_query %>" ic-trigger-on="load">
       &lt;i class="fa fa-spinner fa-spin ic-indicator">&lt;/i>
     &lt;/div>
 </pre>
@@ -21,7 +21,7 @@
 <div class="text-center">
   <h3>The Mighty Toyota Landcruiser...</h3>
   <% 9.times do |i| %>
-    <div ic-src="/lazy?<%= {img:i}.to_query %>" ic-load-on="load" style="display:inline-block;width:33%">
+    <div ic-src="/lazy?<%= {img:i}.to_query %>" ic-trigger-on="load" style="display:inline-block;width:33%">
       <i class="fa fa-spinner fa-spin ic-indicator"></i>
     </div>
   <% end %>

@@ -13,9 +13,9 @@ in flight.</p>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.61.0-2013.06.06/jquery.blockUI.min.js"></script>
 <script>
   $(function(){
-    $('.btn').on('ic.beforeSend', function(){
+    $('.btn').on('beforeSend.ic', function(){
       $.blockUI();
-    }).on('ic.complete', function(){
+    }).on('complete.ic', function(){
         $.unblockUI();
     });
   })

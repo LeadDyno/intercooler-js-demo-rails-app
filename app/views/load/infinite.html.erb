@@ -2,7 +2,7 @@
 
   <h1>Infinite Load</h1>
 
-  <p>This example shows the infinite-load pattern, using the <code>ic-src</code> and <code>ic-load-on='scroll-to-view'</code>
+  <p>This example shows the infinite-load pattern, using the <code>ic-src</code> and <code>ic-trigger-on='scroll-to-view'</code>
     attributes to swap in a new page of data each time the bottom of the page is scrolled into view.</p>
 
   <h3>Code</h3>
@@ -10,7 +10,7 @@
   <h4>HTML</h4>
 
   <pre>
-&lt;div ic-src="/infinite/&lt;%= @page + 1 %>" ic-load-on="scrolled-into-view">
+&lt;div ic-src="/infinite/&lt;%= @page + 1 %>" ic-trigger-on="scrolled-into-view">
   &lt;div class="text-center">
     &lt;hr/>
     Load Yet More Time Wasting Material...
@@ -49,7 +49,7 @@
   </div>
 <% end %>
 
-<div ic-src="/infinite/<%= @page + 1 %>" ic-load-on="scrolled-into-view">
+<div ic-src="/infinite/<%= @page + 1 %>" ic-trigger-on="scrolled-into-view">
   <div class="text-center">
     <hr/>
     Load Yet More Time Wasting Material...
